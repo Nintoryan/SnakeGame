@@ -16,7 +16,7 @@ class Bonus extends Entity{
         this.setTexture('bonus');
         this.setPosition(x * 16, y * 16);
         this.setOrigin(0)
-        this.setScale(0.7)
+        this.setDisplaySize(16,16)
     }
 }
 
