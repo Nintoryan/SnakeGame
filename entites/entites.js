@@ -15,18 +15,18 @@ class Bonus extends Entity{
         this.onPlate = false
         this.setTexture('bonus');
         this.setPosition(x * 16, y * 16);
-        this.setOrigin(0)
-        this.setDisplaySize(16,16)
+        this.setOrigin(0.5);
+        this.setDisplaySize(32,32);
     }
 }
 
 class Food extends Entity {
     constructor(scene, x, y) {
-        super(scene, x, y)
-
+        super(scene, x, y);
+        this.setDisplaySize(32,32);
         this.setTexture('food');
         this.setPosition(x * 16, y * 16);
-        this.setOrigin(0);
+        this.setOrigin(0.5);
 
         this.total = 0;
     }
@@ -37,15 +37,16 @@ class Food extends Entity {
 
 class Snake extends Entity {
     constructor(scene, x, y){
-        super(scene, x, y)
-
+        super(scene, x, y);
         this.headPosition = new Phaser.Geom.Point(x, y);
 
         this.body = scene.add.group();
 
-        this.head = this.body.create(x * 16, y * 16, 'body');
-        this.body.DislpayHeight = game.config.height/2
-        this.head.setOrigin(0);
+        this.head = this.body.create(x * 16, y * 16, 'head');
+        // this.body.DislpayHeight = game.config.height/2;
+        this.head.setOrigin(0.5);
+        this.head.setDisplaySize(40, 40);
+        this.head.depth = 5
 
         this.alive = true;
 
@@ -53,7 +54,12 @@ class Snake extends Entity {
 
         this.moveTime = 0;
 
-        this.tail = new Phaser.Geom.Point(x, y);
+        
+        
+        this.tail = this.body.create(this.head.x, this.head.y, 'tail');
+        this.tail.setOrigin(0.5);
+        this.tail.setDisplaySize(32,32);
+        this.end = new Phaser.Geom.Point(x, y);
 
         this.heading = RIGHT;
         this.direction = RIGHT;
@@ -64,6 +70,7 @@ class Snake extends Entity {
 
         update(time) {
             if(gameState.onGame==true){
+                this.tail.rotation = this.head.rotation
                 if (time >= this.moveTime) {
                     return this.move(time);
                 }
@@ -74,6 +81,7 @@ class Snake extends Entity {
             if(gameState.onGame==true){
                 if (this.direction === UP || this.direction === DOWN) {
                     this.heading = LEFT;
+                    this.head.rotation = 3.2
                 }
             }
         }
@@ -82,6 +90,7 @@ class Snake extends Entity {
             gameState.onGame==true){
                 if (this.direction === UP || this.direction === DOWN) {
                     this.heading = RIGHT;
+                    this.head.rotation = 0
                 }
             }
         }
@@ -90,6 +99,7 @@ class Snake extends Entity {
             gameState.onGame==true){
                 if (this.direction === LEFT || this.direction === RIGHT) {
                     this.heading = UP;
+                    this.head.rotation = 4.7
                 }
             }
         };
@@ -97,6 +107,7 @@ class Snake extends Entity {
             if(gameState.onGame==true){
                 if (this.direction === LEFT || this.direction === RIGHT) {
                     this.heading = DOWN;
+                    this.head.rotation = 1.6
                 }
             }
         }
@@ -137,7 +148,7 @@ class Snake extends Entity {
                 }
 
             this.direction = this.heading;
-            Phaser.Actions.ShiftPosition(this.body.getChildren(), this.headPosition.x * 16, this.headPosition.y * 16, 1, this.tail);
+            Phaser.Actions.ShiftPosition(this.body.getChildren(), this.headPosition.x * 16, this.headPosition.y * 16, 1, this.end);
             var hitBody = Phaser.Actions.GetFirst(this.body.getChildren(), { x: this.head.x, y: this.head.y }, 1);
 
             if (hitBody && this.onGod == false) {
@@ -164,9 +175,15 @@ class Snake extends Entity {
     }
 
     grow() {
-        var newPart = this.body.create(this.tail.x, this.tail.y, 'body');
-        newPart.setOrigin(0);
+        var newPart = this.body.create(this.end.x, this.end.y, 'body')
+        newPart.setOrigin(0.5)
+        newPart.setDisplaySize(32, 32)
+        this.tail.destroy()
+        this.tail = this.body.create(newPart.x, newPart.y, 'tail');
+        this.tail.setOrigin(0.5);
+        this.tail.setDisplaySize(32,32);
     };
+    
     godMode(){
         this.onGod = true
         setTimeout(()=>{this.onGod = false}, 5000);
@@ -178,8 +195,8 @@ class Snake extends Entity {
 
     collideWithBonus(bonus){
         if(this.head.x === bonus.x && this.head.y === bonus.y){
-            var rand = Math.random()
-            rand > 0.5 ? this.speedUp() : this.godMode()
+            var rand = Math.random();
+            rand > 0.5 ? this.speedUp() : this.godMode();
             // this.godMode()
             return true;
         }

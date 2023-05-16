@@ -17,10 +17,10 @@ var gameState ={
 window.onload = function(){
     var config = {
         type: Phaser.WEBGL,
-        width: 800,
-        height: 600,
+        width: 1920,
+        height: 1080,
 
-        backgroundColor: '#bfcc00',
+        backgroundColor: '#7991F5',
         parent: "phaser-example",
         scene:[playgame,
                 main,
@@ -47,6 +47,8 @@ class PlayGame extends Phaser.Scene{
         this.load.image('button', 'assets/button.png');
         this.load.image('selector', 'assets/selector.png');
         this.load.image('bonus', 'assets/bonus.png');
+        this.load.image('head', 'assets/head.png');
+        this.load.image('tail', 'assets/tail.png');
     }
 
     create(){
