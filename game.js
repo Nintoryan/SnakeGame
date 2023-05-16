@@ -20,7 +20,7 @@ window.onload = function(){
         width: 1920,
         height: 1080,
 
-        backgroundColor: 'White',
+        backgroundColor: '#ffffff',
         parent: "phaser-example",
         scene:[playgame,
                 main,
