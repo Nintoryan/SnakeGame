@@ -4,6 +4,7 @@ class SnakeGame extends Phaser.Scene{
     }
 
     create(){
+        this.backGround = this.add.image(game.config.width/2, game.config.height/2, "background");
         gameState.onGame = true
         this.scoreText = this.add.text(5, 10, `score: ${gameState.score}`, { fontSize: '32px', fill: '#000' })
         food = new Food(snacegame, 3, 4, 'food');
