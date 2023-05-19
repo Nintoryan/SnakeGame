@@ -42,6 +42,7 @@ class PlayGame extends Phaser.Scene{
     }
 
     preload(){
+        this.load.image('background', 'assets/bg.png');
         this.load.image('food', 'assets/food.png');
         this.load.image('body', 'assets/body.png');
         this.load.image('button', 'assets/button.png');

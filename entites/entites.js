@@ -179,7 +179,7 @@ class Snake extends Entity {
         newPart.setOrigin(0.5)
         newPart.setDisplaySize(32, 32)
         this.tail.destroy()
-        this.tail = this.body.create(newPart.x, newPart.y, 'tail');
+        this.tail = this.body.create(newPart.x, newPart.y, 'body');
         this.tail.setOrigin(0.5);
         this.tail.setDisplaySize(32,32);
     };
