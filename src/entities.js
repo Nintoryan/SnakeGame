@@ -25,7 +25,7 @@ class Food extends Entity {
         this.total++
     }
 }
-class Bonus extends Food{
+class Bonus extends Entity{
     constructor(scene, x, y, texture){
         super(scene, x, y)
         this.onPlate = false

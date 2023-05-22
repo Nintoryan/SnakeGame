@@ -32,9 +32,11 @@ class SnakeGame extends Phaser.Scene{
 
     addBonus(){
         this.i = Math.floor(Math.random()*2);
+        var x = 1 + Math.floor(Math.random()*10);
+        var y = 1 + Math.floor(Math.random()*10);
         if(gameState.score > 1 && gameState.score % 10 === 0){
-            this.bonus = new Bonus(this, 10, 10, `bonus_${this.i}`);
-            console.log(this.bonus);
+            bonus = new Bonus(this, x, y, `bonus_${this.i}`);
+            console.log(bonus);
         }
     }
 
@@ -42,8 +44,8 @@ class SnakeGame extends Phaser.Scene{
         console.log(snake.speed)
         this.scoreText.setText(`score: ${gameState.score}`)
         if (snake.update(time)) {
-            if(this.bonus!=undefined && snake.collideWithBonus(this.bonus, this.i)){
-                this.bonus.destroy();
+            if(bonus!=undefined && snake.collideWithBonus(bonus, this.i)){
+                bonus.destroy();
                 }
 
             else if (snake.collideWithFood(food)){
