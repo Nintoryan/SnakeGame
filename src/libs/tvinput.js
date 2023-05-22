@@ -19,19 +19,19 @@ window.addEventListener('load', function() {
       var eventHandler = function(evt) {
         console.log(evt.type, evt.target, evt.detail);
         if(evt.type == 'sn:enter-down'){
-          main.gameToggle()
+          mainMenu.gameToggle()
           gameOver.gameToggle()
           scenePause.gameToggle()
         }
         switch(evt.detail.direction){
           case 'up':
-            main.selectorUp()
+            mainMenu.selectorUp()
             scenePause.selectorUp()
             gameOver.selectorUp()
             snake.faceUp()
             break;
           case 'down':
-            main.selectorDown()
+            mainMenu.selectorDown()
             gameOver.selectorDown()
             scenePause.selectorDown()
             snake.faceDown()
@@ -61,20 +61,20 @@ AndroidBridge.onKeyEvent(function(event) {
       var keyCode = event.keyCode;
       switch (keyCode) {
           case AndroidBridge.KEYCODE_DPAD_CENTER:
-            main.gameToggle()
+            mainMenu.gameToggle()
             gameOver.gameToggle()
             scenePause.gameToggle()
           break;
           case AndroidBridge.KEYCODE_DPAD_UP:
             scenePause.selectorUp()
             gameOver.selector()
-            main.selectorUp()
+            mainMenu.selectorUp()
             snake.faceUp()
               break;
           case AndroidBridge.KEYCODE_DPAD_DOWN:
             scenePause.selectorUp()
             gameOver.selectorDown()
-            main.selectorDown()
+            mainMenu.selectorDown()
             snake.faceDown()
               break;
           case AndroidBridge.KEYCODE_DPAD_LEFT:
