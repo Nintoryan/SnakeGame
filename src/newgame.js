@@ -32,8 +32,8 @@ class SnakeGame extends Phaser.Scene{
 
     addBonus(){
         this.i = Math.floor(Math.random()*2);
-        var x = 1 + Math.floor(Math.random()*10);
-        var y = 1 + Math.floor(Math.random()*10);
+        var x = 3 + Math.floor(Math.random()*40);
+        var y = 3 + Math.floor(Math.random()*25);
         if(gameState.score > 1 && gameState.score % 10 === 0){
             bonus = new Bonus(this, x, y, `bonus_${this.i}`);
             console.log(bonus);
@@ -62,10 +62,10 @@ class SnakeGame extends Phaser.Scene{
     }  
         repositionFood() {
             var testGrid = [];
-            for (var y = 1; y < game.config.height/64; y++) {
+            for (var y = 3; y < game.config.height/32; y++) {
                 testGrid[y] = [];
         
-                for (var x = 1; x < game.config.width/64; x++) {
+                for (var x = 3; x < game.config.width/32; x++) {
                     testGrid[y][x] = true;
                 }
             }
@@ -74,8 +74,8 @@ class SnakeGame extends Phaser.Scene{
         
             var validLocations = [];
         
-            for (var y = 1; y < game.config.height/64; y++) {
-                for (var x = 1; x < game.config.width/64; x++) {
+            for (var y = 4; y < game.config.height/32 - 10; y++) {
+                for (var x = 4; x < game.config.width/32 - 10; x++) {
                     if (testGrid[y][x] === true) {
                         validLocations.push({ x: x, y: y });
                     }

@@ -51,7 +51,7 @@ class Snake extends Entity {
 
         this.alive = true;
 
-        this.speed = 130;
+        this.speed = 90;
 
         this.moveTime = 0;
 
@@ -131,32 +131,32 @@ class Snake extends Entity {
                 if(this.onGod == false){
                     switch (this.heading) {
                         case LEFT:
-                            this.headPosition.x = Phaser.Math.Clamp(this.headPosition.x - 1, -1, game.config.width/32);
+                            this.headPosition.x = Phaser.Math.Clamp(this.headPosition.x - 1, 3, game.config.width/32-3);
                         break;
                         case RIGHT:
-                            this.headPosition.x = Phaser.Math.Clamp(this.headPosition.x + 1, -1, game.config.width/32);
+                            this.headPosition.x = Phaser.Math.Clamp(this.headPosition.x + 1, 3, game.config.width/32-3);
                         break;
                         case UP:
-                            this.headPosition.y = Phaser.Math.Clamp(this.headPosition.y - 1, -1, game.config.height/32);
+                            this.headPosition.y = Phaser.Math.Clamp(this.headPosition.y - 1, 3, game.config.height/32-3);
                         break;
                         case DOWN:
-                            this.headPosition.y = Phaser.Math.Clamp(this.headPosition.y + 1, -1, game.config.height/32);
+                            this.headPosition.y = Phaser.Math.Clamp(this.headPosition.y + 1, 3, game.config.height/32-3);
                         break;
                     }
                 }
                 else if(this.onGod == true){
                     switch (this.heading) {
                         case LEFT:
-                            this.headPosition.x = Phaser.Math.Wrap(this.headPosition.x - 1, -1, game.config.width/32);
+                            this.headPosition.x = Phaser.Math.Wrap(this.headPosition.x - 1, 3, game.config.width/32-3);
                             break;
                         case RIGHT:
-                            this.headPosition.x = Phaser.Math.Wrap(this.headPosition.x + 1, -1, game.config.width/32);
+                            this.headPosition.x = Phaser.Math.Wrap(this.headPosition.x + 1, 3, game.config.width/32-3);
                             break;
                         case UP:
-                            this.headPosition.y = Phaser.Math.Wrap(this.headPosition.y - 1, -1, game.config.height/32);
+                            this.headPosition.y = Phaser.Math.Wrap(this.headPosition.y - 1, 3, game.config.height/32-3);
                             break;
                         case DOWN:
-                            this.headPosition.y = Phaser.Math.Wrap(this.headPosition.y + 1, -1, game.config.height/32);
+                            this.headPosition.y = Phaser.Math.Wrap(this.headPosition.y + 1, 3, game.config.height/32-3);
                             break;
                     }
                 }
@@ -172,14 +172,12 @@ class Snake extends Entity {
 
                 return false;
             }
-            // else if(this.headPosition.x == game.config.width/32||this.headPosition.y == game.config.height/32||this.headPosition.x == -1||this.headPosition.y == -1){
-            //     if(this.onGod == false){
-            //         this.alive = false
-            //     }
-            //     else{
-            //         return;
-            //     }
-            // }
+            else if(this.headPosition.x == game.config.width/32||this.headPosition.y == game.config.height/32||this.headPosition.x == -1||this.headPosition.y == -1){
+                if(this.onGod == false){
+                    this.alive = false
+                }
+                
+            }
             
             else {
                 this.moveTime = time + this.speed;
@@ -203,17 +201,19 @@ class Snake extends Entity {
     
     godMode(){
         this.onGod = true
+        console.log('good mod')
         setTimeout(()=>{this.onGod = false}, 5000);
     }
     speedUp(){
         this.speed -= 30;
+        console.log('speedUp')
         setTimeout(()=>{this.speed +=30}, 5000);
     }
 
     collideWithBonus(bonus, i){
         if(this.head.x === bonus.x && this.head.y === bonus.y){
 
-            i === 0 ? this.speedUp() : this.godMode();
+            i == 0 ? this.speedUp() : this.godMode();
             // this.godMode()
             return true;
         }
@@ -227,8 +227,8 @@ class Snake extends Entity {
             this.grow();
             food.eat();
         
-            if (this.speed > 30 && food.total % 5 === 0) {
-            this.speed -= 5;
+            if (this.speed < 140 && food.total % 10 === 0) {
+            this.speed += 5;
             }
 
             return true;
