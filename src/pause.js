@@ -39,10 +39,10 @@ class ScenePause extends Phaser.Scene{
         this.btnClose.setInteractive();
         this.btnClose.on('pointerdown', this.exit, this);
         this.btnStart.on('pointerdown', this.resumeGame, this);
-        this.input.keyboard.on('keydown-BACKSPACE', ()=>{gameOver.exit()}, this)
+        
         document.addEventListener('keydown',(e)=>{
             if(e.keyCode == 8 || e.keyCode == 10009 || e.keyCode == 461 || e.keyCode == 166 || e.keyCode == 196){
-                gameOver.exit()
+                this.onPressExit()
             }
         })
         this.input.keyboard.on('keydown-ENTER', this.gameToggle, this);
@@ -87,7 +87,7 @@ class ScenePause extends Phaser.Scene{
             else if(this.selector.y == this.btnClose.y){
                 mainMenu.clickSound.play()
                 window?.parent.postMessage('GameExit', '*');
-                this.exit()
+                gameOver.exit()
             }
         }
     }
@@ -105,6 +105,12 @@ class ScenePause extends Phaser.Scene{
         
         // this.sys.game.destroy(true);
         // window.close();
+    }
+
+    onPressExit(){
+        if(gameState.onPause == true){
+            gameOver.exit()
+        }
     }
 
     update(){

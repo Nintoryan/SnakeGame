@@ -6,14 +6,14 @@ class SnakeGame extends Phaser.Scene{
     create(){
         game_session.action.startGame = new Date().getTime();
         console.log(game_session.action.startGame)
-
+        gameState.onGame = true
         this.texturePack = mainMenu.texturePack
         this.backGround = this.add.image(game.config.width/2, game.config.height/2, `background_${this.texturePack}`).setOrigin(0.5);
         this.backGround.setDisplaySize(game.config.width, game.config.height+32);
         this.bgmusic = this.sound.add('background-music', {loop: false, volume: 0.5});
         this.marker = 0
         this.bgmusic.play();
-        gameState.onGame = true
+        
         this.scoreText = this.add.text(game.config.width/2 - 100, 55, `${gameState.score}`, { fontFamily:'Nunito', fontStyle:'bold', fontSize: '40px', fill: 'white', textAlign: 'start'  }).setOrigin(0.5)
         this.scoreIcon = this.add.image(this.scoreText.x - 90, this.scoreText.y, 'scoreIcon').setOrigin(0.5).setDisplaySize(60, 66);
 
@@ -24,8 +24,8 @@ class SnakeGame extends Phaser.Scene{
         
         this.snake.grow();
         this.snake.grow();
-        this.input.keyboard.on('keydown-BACKSPACE', ()=>{this.pause()}, this)
-        this.input.keyboard.on('keydown-SPACE', this.pause, this);
+        // this.input.keyboard.on('keydown-BACKSPACE', ()=>{this.pause()}, this)
+        // this.input.keyboard.on('keydown-SPACE', this.pause, this);
         document.addEventListener('keydown',(e)=>{
             if(e.keyCode == 8 || e.keyCode == 10009 || e.keyCode == 461 || e.keyCode == 166 || e.keyCode == 196){
                 this.pause()

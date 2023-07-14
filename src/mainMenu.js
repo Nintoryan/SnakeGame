@@ -47,11 +47,11 @@ class MainMenu extends Phaser.Scene{
 
         this.input.keyboard.on('keydown-ENTER', this.gameToggle, this)
 
-        this.input.keyboard.on('keydown-BACKSPACE', ()=>{gameOver.exit();}, this)
+        // this.input.keyboard.on('keydown-BACKSPACE', ()=>{gameOver.exit();}, this)
 
         document.addEventListener('keydown',(e)=>{
             if(e.keyCode == 8 || e.keyCode == 10009 || e.keyCode == 461 || e.keyCode == 166 || e.keyCode == 196){
-                gameOver.exit()
+                this.onPressExit()
             }
         })
 
@@ -189,6 +189,12 @@ class MainMenu extends Phaser.Scene{
     exit(){
         game_session.action.closeGameSession = new Date().getTime();
         // this.sys.game.destroy(true);
+    }
+
+    onPressExit(){
+        if(gameState.onGame == false){
+            gameOver.exit()
+        }
     }
 
     update(){

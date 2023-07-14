@@ -57,7 +57,7 @@ class GameOver extends Phaser.Scene{
 
         document.addEventListener('keydown',(e)=>{
             if(e.keyCode == 8 || e.keyCode == 10009 || e.keyCode == 461 || e.keyCode == 166 || e.keyCode == 196){
-                this.exit()
+                this.onPressExit()
             }
         })
 
@@ -113,6 +113,12 @@ class GameOver extends Phaser.Scene{
         window?.parent.postMessage('GameExit', '*');
         game_session.action.closeGameSession = new Date().getTime();
         // this.sys.game.destroy(true);
+    }
+
+    onPressExit(){
+        if(gameState.onGame == false){
+            this.exit()
+        }
     }
 
     saveScore(){
