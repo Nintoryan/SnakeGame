@@ -54,7 +54,14 @@ class GameOver extends Phaser.Scene{
         this.btnClose.on('pointerdown', this.exit, this)
 
         this.input.keyboard.on('keydown-ENTER', this.gameToggle, this)
-        this.input.keyboard.on('keydown-BACKSPACE', ()=>{this.exit()}, this)
+
+        document.addEventListener('keydown',(e)=>{
+            if(e.keyCode == 8 || e.keyCode == 10009 || e.keyCode == 461 || e.keyCode == 166 || e.keyCode == 196){
+                this.exit()
+            }
+        })
+
+        // this.input.keyboard.on('keydown-BACKSPACE', ()=>{this.exit()}, this)
 
         this.saveScore();
         this.loadScore();

@@ -49,6 +49,12 @@ class MainMenu extends Phaser.Scene{
 
         this.input.keyboard.on('keydown-BACKSPACE', ()=>{gameOver.exit();}, this)
 
+        document.addEventListener('keydown',(e)=>{
+            if(e.keyCode == 8 || e.keyCode == 10009 || e.keyCode == 461 || e.keyCode == 166 || e.keyCode == 196){
+                gameOver.exit()
+            }
+        })
+
         this.clickSound = this.sound.add('click', {loop:false})
 
         this.loadScore()

@@ -40,6 +40,11 @@ class ScenePause extends Phaser.Scene{
         this.btnClose.on('pointerdown', this.exit, this);
         this.btnStart.on('pointerdown', this.resumeGame, this);
         this.input.keyboard.on('keydown-BACKSPACE', ()=>{gameOver.exit()}, this)
+        document.addEventListener('keydown',(e)=>{
+            if(e.keyCode == 8 || e.keyCode == 10009 || e.keyCode == 461 || e.keyCode == 166 || e.keyCode == 196){
+                gameOver.exit()
+            }
+        })
         this.input.keyboard.on('keydown-ENTER', this.gameToggle, this);
         this.scoreText = this.add.text(game.config.width/2, game.config.height - 150, `СЧЁТ: ${gameState.score}`, { fontFamily:'Nunito-black', fontStyle:'bold', fontSize: '32px', fill: '#2E3D66' }).setOrigin(0.5)
         this.loadScore()

@@ -26,6 +26,11 @@ class SnakeGame extends Phaser.Scene{
         this.snake.grow();
         this.input.keyboard.on('keydown-BACKSPACE', ()=>{this.pause()}, this)
         this.input.keyboard.on('keydown-SPACE', this.pause, this);
+        document.addEventListener('keydown',(e)=>{
+            if(e.keyCode == 8 || e.keyCode == 10009 || e.keyCode == 461 || e.keyCode == 166 || e.keyCode == 196){
+                this.pause()
+            }
+        })
         this.loadScore();
         console.log(this.snake);
 
