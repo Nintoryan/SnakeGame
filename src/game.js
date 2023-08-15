@@ -113,7 +113,7 @@ class SnakeGame extends Phaser.Scene{
             for (var y = 6; y < (game.config.height/CELL)-2; y++) {
                 for (var x = 3; x < (game.config.width/CELL)-3; x++) {
                     for(let segment of this.snake.bodySegments){
-                        if(segment.x !== x && segment.y !== y){
+                        if(x !== segment.x/CELL && y !== segment.y/CELL){
                             
                                 validLocations.push({ x: x, y: y });
 
