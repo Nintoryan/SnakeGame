@@ -14,6 +14,8 @@ class MainMenu extends Phaser.Scene{
         this.mainbg = this.add.image(game.config.width / 2, game.config.height/2, 'menuStart').setOrigin(0.5)
         this.mainbg.setDisplaySize(game.config.width, game.config.height)
 
+        this.controlsInfo = this.add.image(game.config.width-310, 70, 'controlsInfo').setOrigin(0.5)
+
         this.btnStart = this.add.sprite(game.config.width / 2, game.config.height / 2 + 100, 'button').setScale(0.5);
         this.btnStart.setOrigin(0.5)
 
@@ -40,10 +42,10 @@ class MainMenu extends Phaser.Scene{
         });
         this.btnCloseText.setOrigin(0.5)
 
-        this.btnStart.setInteractive()
-        this.btnClose.setInteractive()
-        this.btnClose.on('pointerdown', this.exit, this)
-        this.btnStart.on('pointerdown', this.startGame, this)
+        // this.btnStart.setInteractive()
+        // this.btnClose.setInteractive()
+        // this.btnClose.on('pointerdown', this.exit, this)
+        // this.btnStart.on('pointerdown', this.startGame, this)
 
         this.input.keyboard.on('keydown-ENTER', this.gameToggle, this)
 
@@ -137,7 +139,63 @@ class MainMenu extends Phaser.Scene{
         })
         
         this.versionText = this.add.text(game.config.width - 60, game.config.height - 40, `${game_version}`, { fontFamily:'Nunito-black', fontStyle:'bold', fontSize: '30px', fill: '#fff' }).setOrigin(0.5);
+    
+        let canvas = document.getElementsByTagName('canvas')[0];
+        let posX = [];
+        let posY = [];
+
+        for(let i = this.btnStart.x - (this.btnStart.width/2); i < this.btnStart.x + (this.btnStart.width/2); i++){
+            posX.push(i);
+        }
+        for(let n = this.btnStart.y - (this.btnStart.height/2); n < this.btnStart.y + (this.btnStart.height/2); n++){
+            posY.push(n);
+        }
+
+        // canvas.addEventListener('click', (e) => {
+        //     this.handleClick(this.checkPosX(e, posX), this.checkPosY(e, posY));
+        //     console.log(this.checkPosX(e, posX));
+        //     console.log(this.checkPosY(e, posY));
+        // });
+
+        let button = document.createElement('button');
+        button.innerHTML = 'Start';
+        button.addEventListener('click', () => {
+            this.startGame();
+        })
+        let parent = document.getElementById('phaser-example');
+        parent.appendChild(button);
+        button.setAttribute('id', 'startBtn');
+        button.style.position = 'absolute';
+        button.style.left = '37%';
+        button.style.top = '60%';
+        button.style.height = this.btnStart.height + 'px';
+        button.style.width = this.btnStart.width + 'px';
+        button.style.opacity = 0;
+    
     }
+
+    checkPosX(e, posX){
+        console.log(`Координаты клика:${e.offsetX}, ${e.offsetY}`);
+        let set = false;
+        posX.forEach(pos => {
+            if(pos === e.offsetX){
+                set = true;
+            }
+        });
+        return set;
+    }
+
+    checkPosY(e, posY){
+        let set = false;
+        posY.forEach(pos => {
+            if(Math.floor(pos) === e.offsetY){
+                set = true;
+            }
+        });
+        return set;
+    }
+
+
 
     loadScore(){
         if(localStorage.getItem('heighScore_snake')){

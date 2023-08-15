@@ -33,7 +33,7 @@ class SnakeGame extends Phaser.Scene{
         })
         this.loadScore();
         console.log(this.snake);
-
+        this.snake.bodySegments[1].setSize(30,30, true)
         this.physics.add.collider(this.snake.bodySegments[1], this.food.body, ()=>{this.snake.grow(); this.repositionFood(); this.snake.biteSound.play();gameState.score+=1}, null, this);
         
         this.stopSound =  setInterval(()=>{this.soundOff(); this.marker >= 5 ? clearInterval(this.stopSound) && this.bgmusic.stop() : null}, 1000);
@@ -78,6 +78,7 @@ class SnakeGame extends Phaser.Scene{
     }
 
     update(time, delta) {
+
         this.marker >= 5 ? clearInterval(this.stopSound) && this.bgmusic.stop() : null
         this.scoreText.setText(`${gameState.score}`)
 
@@ -88,10 +89,10 @@ class SnakeGame extends Phaser.Scene{
                 this.bonus.destroy();
                 }
 
-            else if (snake.collideWithFood(food)){
-                this.repositionFood();
-                gameState.score+=1;
-            }
+            // else if (snake.collideWithFood(food)){
+            //     this.repositionFood();
+            //     gameState.score+=1;
+            // }
         }
         if (!snake.alive) {
             this.snake.destroy()
@@ -100,19 +101,24 @@ class SnakeGame extends Phaser.Scene{
         
     }  
         repositionFood() {
-            const testGrid = Array.from(
-                {length: Math.floor(game.config.height/CELL)},
-                () => Array.from({length: Math.floor(game.config.width/CELL)}, () => true)
-              );
+            // const testGrid = Array.from(
+            //     {length: Math.floor(game.config.height/CELL)},
+            //     () => Array.from({length: Math.floor(game.config.width/CELL)}, () => true)
+            //   );
         
-            snake.updateGrid(testGrid);
+            // snake.updateGrid(testGrid);
         
             var validLocations = [];
         
             for (var y = 6; y < (game.config.height/CELL)-2; y++) {
                 for (var x = 3; x < (game.config.width/CELL)-3; x++) {
-                    if (testGrid[y][x] === true) {
-                        validLocations.push({ x: x, y: y });
+                    for(let segment of this.snake.bodySegments){
+                        if(segment.x !== x && segment.y !== y){
+                            
+                                validLocations.push({ x: x, y: y });
+
+                        }
+                        // validLocations.push({ x: x, y: y });
                     }
                 }
             }

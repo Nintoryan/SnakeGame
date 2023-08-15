@@ -70,7 +70,7 @@ class Snake extends Entity {
         this.head = this.scene.physics.add.sprite(x * CELL, y * CELL, `head_${mainMenu.texturePack}`).play(`liking_${mainMenu.texturePack}`);
         this.body.add(this.head)
         this.head.setOrigin(0.5);
-        this.head.setScale(0.55);
+        this.head.setScale(0.4);
         this.head.setDepth(4);
         this.head.rotation = 4.7
 
@@ -87,6 +87,8 @@ class Snake extends Entity {
         this.tail.setDisplaySize(32, 32);
         this.tail.setSize(32, 32, true);
 
+        this.bodyGraphics = this.scene.add.graphics();
+
         this.end = new Phaser.Geom.Point(x, y);
 
         this.heading = RIGHT;
@@ -102,24 +104,24 @@ class Snake extends Entity {
         this.downSound = this.scene.sound.add('down', {loop: false, volume: 0.5});
         this.deadSound = this.scene.sound.add('lose', {loop: false, volume: 0.5});
 
-        this.turnPoints = []
+        this.turnPoints = [];
         let turnPointL = new Phaser.Geom.Point(this.head.x, this.head.y);
-        turnPointL.name = 'turnPointL' 
+        turnPointL.name = 'turnPointL';
         let turnPointR = new Phaser.Geom.Point(this.head.x, this.head.y);
-        turnPointR.name = 'turnPointR'
+        turnPointR.name = 'turnPointR';
         let turnPointU = new Phaser.Geom.Point(this.head.x, this.head.y);
-        turnPointU.name = 'turnPointU'
+        turnPointU.name = 'turnPointU';
         let turnPointD = new Phaser.Geom.Point(this.head.x, this.head.y);
-        turnPointD.name = 'turnPointD'
-        this.turnPoints.push(turnPointL, turnPointR, turnPointU, turnPointD);
+        turnPointD.name = 'turnPointD';
+        //this.turnPoints.push(turnPointL, turnPointR, turnPointU, turnPointD);
         }
 
         snakeRotation()
         {
             
-            this.bodySegments = this.body.getChildren();
-            for(let i = 1; i < this.bodySegments.length; i++){
-                for(let r = 0; r < this.turnPoints.length; r++){
+
+            for(let r = 0; r < this.turnPoints.length; r++){
+                for(let i = 1; i < this.bodySegments.length; i++){
                     if(this.bodySegments[i].x == this.turnPoints[r].x && this.bodySegments[i].y == this.turnPoints[r].y){
                         this.bodySegments[i].rotation = this.bodySegments[i-1].rotation;
                     }
@@ -127,8 +129,105 @@ class Snake extends Entity {
             }
         }
 
+        updateBodyGraphics(){
+
+            let bodyWidth = 28;
+            let bodyRadius = 6;
+
+            let points = [this.bodySegments[0]];
+
+            let horizontal = true;
+
+            for(let i = 1; i < this.bodySegments.length-1; i++)
+            {   
+                if(horizontal)
+                {
+                    if(this.bodySegments[i].y != points[points.length-1].y)
+                    {
+                        points.push(this.bodySegments[i-1]);
+                        horizontal = false;
+                    }
+                }
+                else
+                {
+                    if(this.bodySegments[i].x != points[points.length-1].x)
+                    {
+                        points.push(this.bodySegments[i-1]);
+                        horizontal = true;
+                    }
+                }
+
+                var x1 = this.bodySegments[i].x;
+                var y1 = this.bodySegments[i].y;
+
+                var x2 = this.bodySegments[i-1].x;
+                var y2 = this.bodySegments[i-1].y;
+
+                //Расстояние между текущим кусок тела и прошлым больше 1
+                if(!(Math.abs(x1-x2) == CELL ^ Math.abs(y1-y2) == CELL))
+                {
+                    points.push(this.bodySegments[i-1]);
+                    points.push(null);
+                    points.push(this.bodySegments[i]);
+                }
+                
+            }
+
+            points.push(this.bodySegments[this.bodySegments.length-2]);
+
+            points = this.removeDuplicatesKeepFirst(points);
+
+            if(points.length >= 2)
+            {
+                this.bodyGraphics.clear();
+            }
+
+            switch(mainMenu.texturePack){
+                case 0:
+                    this.bodyGraphics.fillStyle(0xff7900);
+                    break;
+                case 1:
+                    this.bodyGraphics.fillStyle(0xf7506a);
+                    break;
+                case 2:
+                    this.bodyGraphics.fillStyle(0xf2e820);
+                    break;
+            }
+
+            for(let i = 1; i < points.length; i++)
+            {
+                let p1 = points[i-1];
+                let p2 = points[i];
+
+                if(p1 == null || p2 == null) continue;
+
+                if(p1.x == p2.x)
+                {
+                    this.bodyGraphics.fillRoundedRect(Math.min(p1.x, p2.x)-bodyWidth/2, Math.min(p1.y, p2.y)-bodyWidth/2, bodyWidth, Math.abs(p1.y-p2.y) + bodyWidth, bodyRadius);
+                }
+                else if(p1.y == p2.y)
+                {
+                    this.bodyGraphics.fillRoundedRect(Math.min(p1.x, p2.x)-bodyWidth/2, Math.min(p1.y, p2.y)-bodyWidth/2, Math.abs(p1.x-p2.x) + bodyWidth, bodyWidth, bodyRadius);
+                }
+            }
+            
+            this.bodyGraphics.fillPath();
+        }
+
+        removeDuplicatesKeepFirst(arr) {
+            const uniqueValues = new Set();
+            return arr.filter((value) => {
+              if (value === null || !uniqueValues.has(value)) {
+                uniqueValues.add(value);
+                return true;
+              }
+              return false;
+            });
+          }
+
         update(time) {
             if(gameState.onGame==true){
+                this.updateBodyGraphics();
                 this.snakeRotation();
                 if (time >= this.moveTime) {
                     return this.move(time);
@@ -143,7 +242,7 @@ class Snake extends Entity {
                 if (this.direction === UP || this.direction === DOWN) {
                     this.heading = LEFT;
                     this.leftSound.play();
-                    this.head.rotation = 1.57;
+                    this.head.rotation = 1.57079;
                     let turnPointL = new Phaser.Geom.Point(this.head.x, this.head.y);
                     this.turnPoints.push(turnPointL);
                 }
@@ -156,7 +255,7 @@ class Snake extends Entity {
                 if (this.direction === UP || this.direction === DOWN) {
                     this.heading = RIGHT;
                     this.rightSound.play();
-                    this.head.rotation = 4.71;
+                    this.head.rotation = 4.71238;
                     let turnPointR = new Phaser.Geom.Point(this.head.x, this.head.y);
                     this.turnPoints.push(turnPointR);
                 }
@@ -169,7 +268,7 @@ class Snake extends Entity {
                 if (this.direction === LEFT || this.direction === RIGHT) {
                     this.heading = UP;
                     this.upSound.play();
-                    this.head.rotation = 3.15;
+                    this.head.rotation = 3.14159;
                     let turnPointU = new Phaser.Geom.Point(this.head.x, this.head.y);
                     this.turnPoints.push(turnPointU);
                 }
@@ -240,7 +339,7 @@ class Snake extends Entity {
             
             else {
                 this.moveTime = time + this.speed;
-                this.head.x = this.head.x
+            
                 this.alive = true;
                 return true;
             }
@@ -250,14 +349,16 @@ class Snake extends Entity {
     grow() {
         
         this.tail.setTexture(`body_${mainMenu.texturePack}`)
-        this.tail.setDisplaySize(40,40)
+        this.tail.setDisplaySize(0,0)
+
         this.tail = this.scene.add.sprite(this.head.x, this.head.y, `tail_${mainMenu.texturePack}`)
         
         this.tail.rotation = this.bodySegments[this.bodySegments.length-1].rotation
+        this.tail.alpha = 0
         this.body.add(this.tail)
         this.tail.setOrigin(0.5)
         this.tail.setDisplaySize(40,40)
-        this.head.setTexture(`head_${mainMenu.texturePack}`)
+        // this.head.setTexture(`head_${mainMenu.texturePack}`)
     };
     
     godMode(){
@@ -278,7 +379,7 @@ class Snake extends Entity {
 
             bonus.index !== 1 ? this.speedUp() : this.godMode();
             
-            bonus.bonusSound.play()
+            bonus.bonusSound.play();
             
             return true;
             
@@ -310,8 +411,8 @@ class Snake extends Entity {
             const y = segment.y / CELL;
             const x = segment.x / CELL;
             
-            grid[y] = {};
-            grid[y][x] = false;
+            // grid[y] = {};
+            grid[x][y] = false;
           }
 
         return grid;

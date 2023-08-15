@@ -3,38 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="preload" as="font" href="assets/fonts/static/Nunito-ExtraBold.ttf" type="font/ttf">
-  <link rel="preload" as="font" href="assets/fonts/static/Nunito-Black.ttf" type="font/ttf">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="preload" as="font" href="assets/fonts/static/Nunito-ExtraBold.ttf" type="font/ttf">
+  <link rel="preload" as="font" href="assets/fonts/static/Nunito-Black.ttf" type="font/ttf"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" user-scalable="no">
   <title>Snake</title>
   <script src="src/libs/spatial_navigation.js"></script>
   <script src="src/libs/tvinput.js"></script>
+  <!-- <script src="src/phaser/phaser.js"></script> -->
   <script src="src/phaser/phaser.min.js"></script>
-  <script src="src/entities.js"></script>
+
   <script src="src/preloader.js"></script>
   <script src="src/mainMenu.js"></script>
-  <script src="src/pause.js"></script>
   <script src="src/gameOver.js"></script>
-  <script src="src/game.js"></script>
   
-  <script src="index.js"></script>
+ 
+  
+  <script src="src/entities.js"></script>
+  <script src="src/pause.js"></script>
+  <script src="src/game.js"></script>
+
+  <script src="oldindex.js"></script>
+  
 </head>
 <body>
-  <div id="phaser-example" class="focusable" style="outline: 0; padding: 0; display: flex; align-items: baseline; justify-content: center; margin: 15px auto; height: 100%; width: 100%; background-color: #000000;"></div>
+  <div id="phaser-example" class="focusable" style="outline: 0; padding: 0; display: flex; align-items: baseline; justify-content: center; height: 100%; width: 100%; background-color: #000000;"></div>
   <style>
     @font-face {
       font-family: 'Nunito';
-      src: url('assets/fonts/static/Nunito-ExtraBold.ttf');
+      src: url('assets/fonts/static/Nunito-ExtraBold.ttf') format('truetype');
+      src: url('assets/fonts/static/Nunito-ExtraBold.woff') format('woff');
+      src: url('assets/fonts/static/Nunito-ExtraBold.woff2') format('woff2');
+
     }
 
     @font-face {
       font-family: 'Nunito-black';
       font-weight: 1000;
-      src: url('assets/fonts/static/Nunito-Black.ttf');
+      src: url('assets/fonts/static/Nunito-Black.ttf') format('truetype');
+      src: url('assets/fonts/static/Nunito-Black.woff') format('woff');
+      src: url('assets/fonts/static/Nunito-Black.woff2') format('woff2');
     }
     body{
       background-color: #000000;
-
+      margin: 0;
       outline: 0;
     }
     canvas{
