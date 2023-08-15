@@ -9,7 +9,7 @@ class SnakeGame extends Phaser.Scene{
         gameState.onGame = true
         this.texturePack = mainMenu.texturePack
         this.backGround = this.add.image(game.config.width/2, game.config.height/2, `background_${this.texturePack}`).setOrigin(0.5);
-        this.backGround.setDisplaySize(game.config.width, game.config.height+32);
+        this.backGround.setDisplaySize(game.config.width, game.config.height+16);
         this.bgmusic = this.sound.add('background-music', {loop: false, volume: 0.5});
         this.marker = 0
         this.bgmusic.play();
@@ -25,7 +25,7 @@ class SnakeGame extends Phaser.Scene{
         this.snake.grow();
         this.snake.grow();
         // this.input.keyboard.on('keydown-BACKSPACE', ()=>{this.pause()}, this)
-        // this.input.keyboard.on('keydown-SPACE', this.pause, this);
+        this.input.keyboard.on('keydown-SPACE', ()=> {this.snake.godMode()}, this);
         document.addEventListener('keydown',(e)=>{
             if(e.keyCode == 8 || e.keyCode == 10009 || e.keyCode == 461 || e.keyCode == 166 || e.keyCode == 196){
                 this.pause()
