@@ -317,7 +317,7 @@ class Snake extends Entity {
                             this.headPosition.y = Phaser.Math.Wrap(this.headPosition.y - 1, 6, game.config.height/CELL - 1);
                             break;
                         case DOWN:
-                            this.headPosition.y = Phaser.Math.Wrap(this.headPosition.y + 1, 5, game.config.height/CELL - 2);
+                            this.headPosition.y = Phaser.Math.Wrap(this.headPosition.y + 1, 6, game.config.height/CELL - 2);
                             break;
                     }
                 }
