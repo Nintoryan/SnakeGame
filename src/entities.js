@@ -347,7 +347,7 @@ class Snake extends Entity {
     }
 
     grow() {
-        
+        this.bodySegments[1].setSize(30,30, true)
         this.tail.setTexture(`body_${mainMenu.texturePack}`)
         this.tail.setDisplaySize(0,0)
 

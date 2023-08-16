@@ -7,7 +7,7 @@ var DOWN = 1;
 var LEFT = 2;
 var RIGHT = 3;
 var CELL = 32;
-var game_version = 'v 0.1.4';
+var game_version = 'v 0.1.5';
 
 var game_session = {
     ts: 0,

@@ -34,6 +34,7 @@ class SnakeGame extends Phaser.Scene{
         this.loadScore();
         console.log(this.snake);
         this.snake.bodySegments[1].setSize(30,30, true)
+        this.snake.bodySegments[1].depth = this.food.body.depth
         this.physics.add.collider(this.snake.bodySegments[1], this.food.body, ()=>{this.snake.grow(); this.repositionFood(); this.snake.biteSound.play();gameState.score+=1}, null, this);
         
         this.stopSound =  setInterval(()=>{this.soundOff(); this.marker >= 5 ? clearInterval(this.stopSound) && this.bgmusic.stop() : null}, 1000);
