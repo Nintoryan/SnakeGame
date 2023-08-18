@@ -347,9 +347,10 @@ class Snake extends Entity {
     }
 
     grow() {
-        this.bodySegments[1].setSize(30,30, true)
+        this.bodySegments[1].setSize(30, 30, true)
         this.tail.setTexture(`body_${mainMenu.texturePack}`)
-        this.tail.setDisplaySize(0,0)
+        this.tail.setDisplaySize(30,30)
+        this.tail.alpha = 0
 
         this.tail = this.scene.add.sprite(this.head.x, this.head.y, `tail_${mainMenu.texturePack}`)
         
@@ -358,6 +359,11 @@ class Snake extends Entity {
         this.body.add(this.tail)
         this.tail.setOrigin(0.5)
         this.tail.setDisplaySize(40,40)
+        this.bodySegments.forEach(element => {
+            element.setSize(30, 30, true)
+            element.alpha = 0
+            this.head.alpha = 1
+        });
         // this.head.setTexture(`head_${mainMenu.texturePack}`)
     };
     
@@ -407,7 +413,7 @@ class Snake extends Entity {
     };
 
     updateGrid(grid) {
-        for (const segment of this.body.getChildren()) {
+        for (const segment of this.body.getChildren()){
             const y = segment.y / CELL;
             const x = segment.x / CELL;
             

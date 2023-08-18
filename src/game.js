@@ -40,6 +40,7 @@ class SnakeGame extends Phaser.Scene{
         this.stopSound =  setInterval(()=>{this.soundOff(); this.marker >= 5 ? clearInterval(this.stopSound) && this.bgmusic.stop() : null}, 1000);
         
         this.versionText = this.add.text(game.config.width - 60, game.config.height - 40, `${game_version}`, { fontFamily:'Nunito-black', fontStyle:'bold', fontSize: '30px', fill: '#fff' }).setOrigin(0.5);
+        this.getField()
     }
 
     soundOff(){
@@ -108,25 +109,40 @@ class SnakeGame extends Phaser.Scene{
             //   );
         
             // snake.updateGrid(testGrid);
-        
-            var validLocations = [];
-        
-            for (var y = 6; y < (game.config.height/CELL)-2; y++) {
-                for (var x = 3; x < (game.config.width/CELL)-3; x++) {
-                    for(let segment of this.snake.bodySegments){
-                        if(x !== segment.x/CELL && y !== segment.y/CELL){
-                            
-                                validLocations.push({ x: x, y: y });
-
-                        }
-                        // validLocations.push({ x: x, y: y });
-                    }
-                }
+            let ocupate = []
+            
+            
+            for (let segment of this.snake.bodySegments){
+                ocupate.push({x:segment.x, y: segment.y})
             }
         
-            if (validLocations.length > 0) {
-                var pos = Phaser.Math.RND.pick(validLocations);
-                var newpos = Phaser.Math.RND.pick(validLocations);
+            if (validLocationsX.length > 0) {
+                
+                var pos = {
+                    x: this.getPositionX(),
+                    y: this.getPositionY()
+                };
+
+                var newpos = {
+                    x: this.getPositionX(),
+                    y: this.getPositionY()
+                };
+
+                for(let point of ocupate){
+                    if(pos.x == point.x && pos.y == point.y){
+                        pos = {
+                            x: this.getPositionX(),
+                            y: this.getPositionY()
+                        }
+                    }
+                    if(newpos.x == point.x && newpos.y == point.y){
+                        newpos = {
+                            x: this.getPositionX(),
+                            y: this.getPositionY()
+                        }
+                    }
+                }
+
                 food.body.setPosition(pos.x*CELL, pos.y*CELL);
                 this.addBonus(newpos.x, newpos.y, Math.floor(Math.random()*2));
                 return true;
@@ -134,8 +150,30 @@ class SnakeGame extends Phaser.Scene{
                 return false;
             }
         }
+
+        getPositionX(){
+            let x = Phaser.Math.RND.pick(validLocationsX);
+            return x;
+        }
+
+        getPositionY(){
+            let y = Phaser.Math.RND.pick(validLocationsY);
+            return y;
+        }
+
+        getField(){
+            for (var y = 6; y < (game.config.height/CELL)-2; y++) {
+                validLocationsY.push(Math.floor(y))
+            }
+            for (var x = 3; x < (game.config.width/CELL)-3; x++) {
+                validLocationsX.push(Math.floor(x))
+             }
+        }
     
 
 }
+            var validLocationsY = [];
+            var validLocationsX = []
+
 
 var snacegame = new SnakeGame()
