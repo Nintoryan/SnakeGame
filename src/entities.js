@@ -360,9 +360,11 @@ class Snake extends Entity {
         this.tail.setOrigin(0.5)
         this.tail.setDisplaySize(40,40)
         this.bodySegments.forEach(element => {
+            element.setDisplaySize(30, 30)
             element.setSize(30, 30, true)
             element.alpha = 0
             this.head.alpha = 1
+            this.head.setScale(0.4);
         });
         // this.head.setTexture(`head_${mainMenu.texturePack}`)
     };

@@ -103,18 +103,13 @@ class SnakeGame extends Phaser.Scene{
         
     }  
         repositionFood() {
-            // const testGrid = Array.from(
-            //     {length: Math.floor(game.config.height/CELL)},
-            //     () => Array.from({length: Math.floor(game.config.width/CELL)}, () => true)
-            //   );
-        
-            // snake.updateGrid(testGrid);
             let ocupate = []
             
             
             for (let segment of this.snake.bodySegments){
                 ocupate.push({x:segment.x, y: segment.y})
             }
+            console.log(ocupate)
         
             if (validLocationsX.length > 0) {
                 
@@ -129,13 +124,14 @@ class SnakeGame extends Phaser.Scene{
                 };
 
                 for(let point of ocupate){
-                    if(pos.x == point.x && pos.y == point.y){
+                    if(pos.x == Math.floor(point.x/CELL) && pos.y == Math.floor(point.y/CELL)){
                         pos = {
                             x: this.getPositionX(),
                             y: this.getPositionY()
                         }
+                        console.log(pos.x, pos.y)
                     }
-                    if(newpos.x == point.x && newpos.y == point.y){
+                    else if(newpos.x == Math.floor(point.x/CELL) && newpos.y == Math.floor(point.y/CELL)){
                         newpos = {
                             x: this.getPositionX(),
                             y: this.getPositionY()
