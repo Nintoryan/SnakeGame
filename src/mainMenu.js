@@ -139,39 +139,7 @@ class MainMenu extends Phaser.Scene{
         })
         
         this.versionText = this.add.text(game.config.width - 60, game.config.height - 40, `${game_version}`, { fontFamily:'Nunito-black', fontStyle:'bold', fontSize: '30px', fill: '#fff' }).setOrigin(0.5);
-    
-        let canvas = document.getElementsByTagName('canvas')[0];
-        let posX = [];
-        let posY = [];
-
-        for(let i = this.btnStart.x - (this.btnStart.width/2); i < this.btnStart.x + (this.btnStart.width/2); i++){
-            posX.push(i);
-        }
-        for(let n = this.btnStart.y - (this.btnStart.height/2); n < this.btnStart.y + (this.btnStart.height/2); n++){
-            posY.push(n);
-        }
-
-        // canvas.addEventListener('click', (e) => {
-        //     this.handleClick(this.checkPosX(e, posX), this.checkPosY(e, posY));
-        //     console.log(this.checkPosX(e, posX));
-        //     console.log(this.checkPosY(e, posY));
-        // });
-
-        let button = document.createElement('button');
-        button.innerHTML = 'Start';
-        button.addEventListener('click', () => {
-            this.startGame();
-        })
-        let parent = document.getElementById('phaser-example');
-        parent.appendChild(button);
-        button.setAttribute('id', 'startBtn');
-        button.style.position = 'absolute';
-        button.style.left = '37%';
-        button.style.top = '60%';
-        button.style.height = this.btnStart.height + 'px';
-        button.style.width = this.btnStart.width + 'px';
-        button.style.opacity = 0;
-    
+        
     }
 
     checkPosX(e, posX){

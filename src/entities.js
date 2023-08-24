@@ -406,7 +406,6 @@ class Snake extends Entity {
             if (this.speed < 150 && food.total % 5 === 0) {
             this.speed += 5;
             }
-
             return true;
         }
         else {

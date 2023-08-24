@@ -62,4 +62,17 @@
 
     }
   </style>
+  <script>
+    var gameDiv = document.getElementById('phaser-example');
+
+    window.addEventListener("load", (event) => {
+      gameDiv.focus();
+      console.log(`Game div in focus! ${document.activeElement}`);
+    });
+
+    gameDiv.onblur = function () {
+      gameDiv.focus();
+      console.log(`Game div in focus! ${document.activeElement}`);
+    }
+  </script>
 </body>
