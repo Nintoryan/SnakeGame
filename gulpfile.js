@@ -13,7 +13,7 @@ const buildBundle = ()=> {
         presets:["@babel/preset-env"]
     }))
     .pipe(uglify())
-    .pipe(dest('public/src'))
+    .pipe(dest('.'))
    
 }
 
@@ -23,14 +23,14 @@ const replaceLibs = () => {
         'src/phaser/*.js'
     ])
 
-    .pipe(dest('public/src/libs'))
+    .pipe(dest('libs'))
 }
 
 const html = () => {
     return src([
         'main.html'
     ])
-    .pipe(dest('public/src'))
+    .pipe(dest('.'))
 }
 
 const assets =() =>{
@@ -44,4 +44,4 @@ exports.html = html;
 exports.buildBundle = buildBundle;
 exports.replaceLibs = replaceLibs;
 
-exports.default = series(buildBundle, replaceLibs, assets, html)
+exports.default = series(buildBundle)
