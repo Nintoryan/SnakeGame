@@ -28,7 +28,7 @@ const replaceLibs = () => {
 
 const html = () => {
     return src([
-        'index.html'
+        'main.html'
     ])
     .pipe(dest('public/src'))
 }
