@@ -34,7 +34,7 @@ class SnakeGame extends Phaser.Scene{
         console.log(this.snake);
         this.snake.bodySegments[1].setSize(30,30, true)
         this.snake.bodySegments[1].depth = this.food.body.depth
-        this.physics.add.collider(this.snake.bodySegments[1], this.food.body, ()=>{this.snake.grow(); this.repositionFood(); this.snake.biteSound.play();gameState.score+=1}, null, this);
+        // this.physics.add.collider(this.snake.bodySegments[0], this.food.body, ()=>{this.snake.grow(); this.repositionFood(); this.snake.biteSound.play();gameState.score+=1}, null, this);
         
         this.stopSound =  setInterval(()=>{this.soundOff(); this.marker >= 5 ? clearInterval(this.stopSound) && this.bgmusic.stop() : null}, 1000);
         
@@ -70,10 +70,10 @@ class SnakeGame extends Phaser.Scene{
             console.log(i)
 
             console.log(this.bonus);
-            this.physics.add.collider(this.snake.bodySegments[1], this.bonus.body, ()=>{this.bonus.bonusSound.play(); if(this.bonus.index == 0){this.snake.speedUp()}; if(this.bonus.index==1){this.snake.godMode()}; this.bonus.destroy()}, null, this);
+            // this.physics.add.collider(this.snake.bodySegments[1], this.bonus.body, ()=>{this.bonus.bonusSound.play(); if(this.bonus.index == 0){this.snake.speedUp()}; if(this.bonus.index==1){this.snake.godMode()}; this.bonus.destroy()}, null, this);
             setTimeout(()=>{
                 this.bonus.destroy()
-            }, 12000)
+            }, 10000)
             
         }
     }
@@ -84,16 +84,17 @@ class SnakeGame extends Phaser.Scene{
         this.scoreText.setText(`${gameState.score}`)
 
         game_session.score = gameState.score
-
+        
         if (snake.update(time)) {
+            
             if(this.bonus!=undefined && snake.collideWithBonus(this.bonus)){
                 this.bonus.destroy();
                 }
 
-            // else if (snake.collideWithFood(food)){
-            //     this.repositionFood();
-            //     gameState.score+=1;
-            // }
+            else if (snake.collideWithFood(food)){
+                this.repositionFood();
+                gameState.score+=1;
+            }
         }
         if (!snake.alive) {
             this.snake.destroy()
@@ -147,12 +148,12 @@ class SnakeGame extends Phaser.Scene{
         }
 
         getPositionX(){
-            let x = Phaser.Math.RND.pick(validLocationsX);
+            let x = Math.floor(Phaser.Math.RND.pick(validLocationsX));
             return x;
         }
 
         getPositionY(){
-            let y = Phaser.Math.RND.pick(validLocationsY);
+            let y = Math.floor(Phaser.Math.RND.pick(validLocationsY));
             return y;
         }
 
