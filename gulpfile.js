@@ -11,7 +11,7 @@ const buildBundle = ()=> {
     .pipe(babel({
         presets:["@babel/preset-env"]
     }))
-    .pipe(dest('publick/src'))
+    .pipe(dest('public/src'))
    
 }
 
