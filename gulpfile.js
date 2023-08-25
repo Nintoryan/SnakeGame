@@ -17,31 +17,4 @@ const buildBundle = ()=> {
    
 }
 
-const replaceLibs = () => {
-    return src([
-        'src/libs/*.js',
-        'src/phaser/*.js'
-    ])
-
-    .pipe(dest('libs'))
-}
-
-const html = () => {
-    return src([
-        'main.html'
-    ])
-    .pipe(dest('.'))
-}
-
-const assets =() =>{
-    return src([
-        'assets/**/*.*'
-    ])
-    .pipe(dest('public/src/assets'))
-}
-
-exports.html = html;
-exports.buildBundle = buildBundle;
-exports.replaceLibs = replaceLibs;
-
 exports.default = series(buildBundle)
