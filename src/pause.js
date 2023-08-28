@@ -11,6 +11,8 @@ class ScenePause extends Phaser.Scene{
         this.btnStart = this.add.sprite(game.config.width / 2, game.config.height / 2 + 100, 'button').setScale(0.5);
         this.btnStart.setOrigin(0.5)
 
+        this.controlsInfo = this.add.image(310, 70, 'controlsInfo').setOrigin(0.5)
+
         this.btnClose = this.add.sprite(this.btnStart.x, this.btnStart.y + 120, 'button').setScale(0.5);
         this.btnClose.setOrigin(0.5)
 

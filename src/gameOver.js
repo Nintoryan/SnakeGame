@@ -14,6 +14,8 @@ class GameOver extends Phaser.Scene{
         this.menuBG = this.add.image(game.config.width/2, game.config.height/2, `mainBG_${mainMenu.texturePack}`).setOrigin(0.5)
         this.menuBG.setDisplaySize(game.config.width, game.config.height)
 
+        this.controlsInfo = this.add.image(310, 70, 'controlsInfo').setOrigin(0.5)
+
         this.gameOverImg = this.add.image(game.config.width/2, game.config.height/2, 'menuGameOver').setOrigin(0.5)
         this.gameOverImg.setDisplaySize(game.config.width, game.config.height)
 

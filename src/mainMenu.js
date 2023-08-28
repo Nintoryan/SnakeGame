@@ -14,7 +14,8 @@ class MainMenu extends Phaser.Scene{
         this.mainbg = this.add.image(game.config.width / 2, game.config.height/2, 'menuStart').setOrigin(0.5)
         this.mainbg.setDisplaySize(game.config.width, game.config.height)
 
-        this.controlsInfo = this.add.image(game.config.width-310, 70, 'controlsInfo').setOrigin(0.5)
+        this.controlsInfo = this.add.image(260, 70, 'controlsInfo').setOrigin(0.5)
+        this.ageInfo = this.add.image(game.config.width-210, 70, 'ageInfo').setOrigin(0, 0.5)
 
         this.btnStart = this.add.sprite(game.config.width / 2, game.config.height / 2 + 100, 'button').setScale(0.5);
         this.btnStart.setOrigin(0.5)

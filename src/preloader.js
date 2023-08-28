@@ -18,6 +18,7 @@ class Preloader extends Phaser.Scene{
 
         this.load.image('info', 'gameInfo.png');
         this.load.image('controlsInfo', 'controlsInfo.png');
+        this.load.image('ageInfo', 'ageInfo.png')
         
         this.load.image('background_0', 'skins/bg_0.png');
         this.load.image('background_1', 'skins/bg_1.png');

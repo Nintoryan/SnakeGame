@@ -17,7 +17,7 @@ class SnakeGame extends Phaser.Scene{
         this.scoreText = this.add.text(game.config.width/2 - 100, 55, `${gameState.score}`, { fontFamily:'Nunito', fontStyle:'bold', fontSize: '40px', fill: 'white', textAlign: 'start'  }).setOrigin(0.5)
         this.scoreIcon = this.add.image(this.scoreText.x - 90, this.scoreText.y, 'scoreIcon').setOrigin(0.5).setDisplaySize(60, 66);
 
-        this.gameInfo = this.add.image(265, 60, 'info').setScale(0.43).setOrigin(0.5);
+        this.gameInfo = this.add.image(290, 60, 'info').setOrigin(0.5);
 
         this.food = food = new Food(snacegame, 30, 20, 'food');
         this.snake = snake = new Snake(snacegame, 20, 20, 'body_0');
