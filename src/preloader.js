@@ -9,7 +9,7 @@ class Preloader extends Phaser.Scene{
     {
         this.loadText = this.add.text(game.config.width/2, game.config.height/2, 'ЗАГРУЗКА...', { fontFamily:'Nunito-black', fontStyle:'bold', fontSize: '40px', fill: 'white'});
         this.loadText2 = this.add.text(game.config.width/2, game.config.height/2, 'ЗАГРУЗКА...', { fontFamily:'Nunito', fontStyle:'bold', fontSize: '40px', fill: 'white'});
-        this.loadText2.visible = false;
+        this.loadText2.alpha = 0;
         this.loadText.setOrigin(0.5);
         // this.loadText.setStroke('#203c5b', 6);
         // this.loadText.setShadow(2, 2, '#2d2d2d', 4, true, false);
