@@ -52,7 +52,7 @@ class ScenePause extends Phaser.Scene{
         this.loadScore()
 
         
-        
+        this.versionText = this.add.text(game.config.width - 60, game.config.height - 40, `${game_version}`, { fontFamily:'Nunito-black', fontStyle:'bold', fontSize: '30px', fill: '#fff' }).setOrigin(0.5);
     }
 
     loadScore(){
